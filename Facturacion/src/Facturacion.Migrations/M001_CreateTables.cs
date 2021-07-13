@@ -18,6 +18,7 @@ namespace Facturacion.Migrations
                 CreatedBy    INT             NOT NULL,
                 CreatedOn    DATETIME        NOT NULL DEFAULT (DATETIME('now')),
                 ModifiedBy   INT             NOT NULL,
+                IsAdmin      INT             NOT NULL,
                 ModifiedOn   DATETIME        NOT NULL DEFAULT (DATETIME('now')),
                 CONSTRAINT fk_User_CreatedBy  FOREIGN KEY (CreatedBy)  REFERENCES Users(CreatedBy),
                 CONSTRAINT fk_User_ModifiedBy FOREIGN KEY (ModifiedBy) REFERENCES Users(ModifiedBy)
@@ -32,6 +33,7 @@ namespace Facturacion.Migrations
                 Id           INTEGER PRIMARY KEY AUTOINCREMENT,
                 FullName     TEXT            NOT NULL,
                 GvmtId       TEXT            NOT NULL UNIQUE,
+                Cuenta       TEXT            NOT NULL DEFAULT('0'),
                 Active       TINYINT         NOT NULL DEFAULT (1),
                 CreatedBy    INT             NOT NULL,
                 CreatedOn    DATETIME        NOT NULL DEFAULT (DATETIME('now')),

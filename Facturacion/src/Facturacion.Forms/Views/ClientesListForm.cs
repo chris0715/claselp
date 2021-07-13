@@ -20,6 +20,7 @@ namespace Facturacion.Forms.Views
         {
             InitializeComponent();
             _customerService = customerService;
+            this.simpleComboBox.Items.AddRange(_customerService.FieldsMeta.Keys.ToArray());
         }
 
         private void SalirButton_Click(object sender, EventArgs e) => Hide();
@@ -102,6 +103,18 @@ namespace Facturacion.Forms.Views
             NombreBox.Clear();
             CedulaBox.Clear();
             UpdateAndRefreshData();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ListadoGrid.DataSource = _customerService.GetCustomerBy(this.simpleComboBox.SelectedItem.ToString(), this.simpleInput.Text);
+            ListadoGrid.Update();
+            ListadoGrid.Refresh();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

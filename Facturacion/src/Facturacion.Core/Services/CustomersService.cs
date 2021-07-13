@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Facturacion.Core.Entities;
@@ -9,6 +10,13 @@ namespace Facturacion.Core.Services
     {
         private readonly AuthService _authService;
         private readonly DbService _dbService;
+
+        public Dictionary<string, string> FieldsMeta = new Dictionary<string, string>{
+
+            { "Razon Social","FullName" },
+            { "Cedula", "GvmtId" },
+            { "Cuenta Contable", "Cuenta" }
+        };
 
         public async Task<bool> CreateCustomer(Customer customer)
         {
@@ -67,5 +75,20 @@ namespace Facturacion.Core.Services
 
         public CustomersService(DbService dbService, AuthService authService) =>
             (_dbService, _authService) = (dbService, authService);
+
+        public List<Customer> GetCustomerBy(string field, object value)
+        {
+
+            using var db = _dbService.Open();
+            var fieldDb = this.FieldsMeta[field];
+
+
+            var customers = db.Query<Customer>(@$"SELECT * 
+                     FROM Customers
+                     WHERE {fieldDb} LIKE @n", new { n =  $@"%{value.ToString()}%" })
+                    .ToList();
+            return customers;
+           
+        }
     }
 }
