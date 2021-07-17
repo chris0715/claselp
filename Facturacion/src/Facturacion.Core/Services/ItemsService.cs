@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Facturacion.Core.Entities;
@@ -10,6 +11,16 @@ namespace Facturacion.Core.Services
     {
         private readonly DbService _dbService;
         private readonly AuthService _authService;
+
+        public List<FieldInfoCore> FieldDropdowns = new List<FieldInfoCore>() {
+
+            new FieldInfoCore { Label= "Descripcion", DbColumnName = "Description" },
+            new FieldInfoCore { Label= "Costo", DbColumnName = "Cost" },
+            new FieldInfoCore { Label= "Precio", DbColumnName = "Price" },
+            new FieldInfoCore { Label= "Cantidad en Stock", DbColumnName = "Stock" },
+            new FieldInfoCore { Label= "Creado por", DbColumnName = "CreatedBy" },
+            new FieldInfoCore { Label= "Modificado por", DbColumnName = "ModifiedBy" },
+        };
 
         public async Task<bool> CreateItem(Item item)
         {
@@ -25,14 +36,23 @@ namespace Facturacion.Core.Services
             try { return (await db.ExecuteAsync(sql, item)) == 1; } catch { return false; }
         }
 
-        public async Task<IEnumerable<Item>> GetItems(string description = null)
+       
+
+        public IEnumerable<Item> GetItems(string fieldDb = null, string value = null)
         {
             var sql = "SELECT * FROM Items";
-            if (!string.IsNullOrEmpty(description))
-                sql += " WHERE Description LIKE '%' || @description || '%'";
-
             using var db = _dbService.Open();
-            return await db.QueryAsync<Item>(sql, new { description = description.Trim() });
+            var records = new List<Item>();
+            if (!string.IsNullOrEmpty(fieldDb) && !value.IsBlank())
+            {
+                sql += $" WHERE {fieldDb} LIKE  @param1";
+                records = db.Query<Item>(sql, new { param1 = $"%{value.Trim()}%" }).ToList();
+
+            } else
+            {
+                records = db.Query<Item>(sql).ToList();
+            }
+            return records;
         }
 
         public async Task<Item> GetItem(int id)

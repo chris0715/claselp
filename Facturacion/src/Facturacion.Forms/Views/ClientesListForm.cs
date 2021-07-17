@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Facturacion.Core;
 using Facturacion.Core.Services;
 
 namespace Facturacion.Forms.Views
@@ -11,16 +12,15 @@ namespace Facturacion.Forms.Views
 
         private async void UpdateAndRefreshData()
         {
-            ListadoGrid.DataSource = await _customerService.GetCustomers(NombreBox.Text.Trim(), CedulaBox.Text.Trim());
-            ListadoGrid.Update();
-            ListadoGrid.Refresh();
+            this.CargarRegistrosPorDbPropiedad(this.simpleComboBox.SelectedItem as FieldInfoCore, this.simpleInput.Text, this.ListadoGrid, _customerService.GetCustomerBy);
+
         }
 
         public ClientesListForm(CustomersService customerService) : base()
         {
             InitializeComponent();
             _customerService = customerService;
-            this.simpleComboBox.Items.AddRange(_customerService.FieldsMeta.Keys.ToArray());
+            this.InitComboBoxFieldInfoCore(this.simpleComboBox, _customerService.FieldDropdowns);
         }
 
         private void SalirButton_Click(object sender, EventArgs e) => Hide();
@@ -100,21 +100,21 @@ namespace Facturacion.Forms.Views
 
         private void LimpiarFiltroButton_Click(object sender, EventArgs e)
         {
-            NombreBox.Clear();
-            CedulaBox.Clear();
+            
             UpdateAndRefreshData();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+       
+        private void buscarBtn_Click(object sender, EventArgs e)
         {
-            ListadoGrid.DataSource = _customerService.GetCustomerBy(this.simpleComboBox.SelectedItem.ToString(), this.simpleInput.Text);
-            ListadoGrid.Update();
-            ListadoGrid.Refresh();
+            UpdateAndRefreshData();
         }
+
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+
     }
 }

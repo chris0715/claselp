@@ -30,9 +30,9 @@ namespace Facturacion.Forms.Views
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.LimpiarBtn = new System.Windows.Forms.Button();
-            this.DescripcionBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.simpleInput = new System.Windows.Forms.TextBox();
+            this.simpleComboBox = new System.Windows.Forms.ComboBox();
+            this.simpleSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.SalirButton = new System.Windows.Forms.Button();
             this.EliminarButton = new System.Windows.Forms.Button();
@@ -46,9 +46,9 @@ namespace Facturacion.Forms.Views
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.LimpiarBtn);
-            this.groupBox1.Controls.Add(this.DescripcionBox);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.simpleInput);
+            this.groupBox1.Controls.Add(this.simpleComboBox);
+            this.groupBox1.Controls.Add(this.simpleSearch);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
@@ -57,32 +57,32 @@ namespace Facturacion.Forms.Views
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
-            // LimpiarBtn
+            // simpleInput
             // 
-            this.LimpiarBtn.Location = new System.Drawing.Point(681, 22);
-            this.LimpiarBtn.Name = "LimpiarBtn";
-            this.LimpiarBtn.Size = new System.Drawing.Size(107, 23);
-            this.LimpiarBtn.TabIndex = 2;
-            this.LimpiarBtn.Text = "Limpiar Filtro";
-            this.LimpiarBtn.UseVisualStyleBackColor = true;
-            this.LimpiarBtn.Click += new System.EventHandler(this.LimpiarBtn_Click);
+            this.simpleInput.Location = new System.Drawing.Point(164, 21);
+            this.simpleInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.simpleInput.Name = "simpleInput";
+            this.simpleInput.Size = new System.Drawing.Size(494, 23);
+            this.simpleInput.TabIndex = 8;
             // 
-            // DescripcionBox
+            // simpleComboBox
             // 
-            this.DescripcionBox.Location = new System.Drawing.Point(90, 22);
-            this.DescripcionBox.Name = "DescripcionBox";
-            this.DescripcionBox.Size = new System.Drawing.Size(585, 23);
-            this.DescripcionBox.TabIndex = 1;
-            this.DescripcionBox.TextChanged += new System.EventHandler(this.OnTextChangedControls);
+            this.simpleComboBox.FormattingEnabled = true;
+            this.simpleComboBox.Location = new System.Drawing.Point(12, 21);
+            this.simpleComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.simpleComboBox.Name = "simpleComboBox";
+            this.simpleComboBox.Size = new System.Drawing.Size(133, 23);
+            this.simpleComboBox.TabIndex = 6;
             // 
-            // label1
+            // simpleSearch
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Descripcion:";
+            this.simpleSearch.Location = new System.Drawing.Point(681, 22);
+            this.simpleSearch.Name = "simpleSearch";
+            this.simpleSearch.Size = new System.Drawing.Size(107, 23);
+            this.simpleSearch.TabIndex = 2;
+            this.simpleSearch.Text = "Buscar";
+            this.simpleSearch.UseVisualStyleBackColor = true;
+            this.simpleSearch.Click += new System.EventHandler(this.BuscarBtn_Click);
             // 
             // panel1
             // 
@@ -171,14 +171,14 @@ namespace Facturacion.Forms.Views
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button LimpiarBtn;
-        private System.Windows.Forms.TextBox DescripcionBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button simpleSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button CrearButton;
         private System.Windows.Forms.DataGridView ListadoGrid;
         private System.Windows.Forms.Button EliminarButton;
         private System.Windows.Forms.Button ModificarButton;
         private System.Windows.Forms.Button SalirButton;
+        private System.Windows.Forms.ComboBox simpleComboBox;
+        private System.Windows.Forms.TextBox simpleInput;
     }
 }

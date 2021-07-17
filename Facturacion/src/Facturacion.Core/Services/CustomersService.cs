@@ -6,16 +6,17 @@ using Facturacion.Core.Entities;
 
 namespace Facturacion.Core.Services
 {
+ 
     public class CustomersService
     {
         private readonly AuthService _authService;
         private readonly DbService _dbService;
 
-        public Dictionary<string, string> FieldsMeta = new Dictionary<string, string>{
+        public List<FieldInfoCore> FieldDropdowns = new List<FieldInfoCore>() {
 
-            { "Razon Social","FullName" },
-            { "Cedula", "GvmtId" },
-            { "Cuenta Contable", "Cuenta" }
+            new FieldInfoCore { Label= "Razon Social", DbColumnName = "FullName" },
+            new FieldInfoCore { Label= "Cedula", DbColumnName = "GvmtId" },
+            new FieldInfoCore { Label= "Cuenta Contable", DbColumnName = "Cuenta" },
         };
 
         public async Task<bool> CreateCustomer(Customer customer)
@@ -76,12 +77,13 @@ namespace Facturacion.Core.Services
         public CustomersService(DbService dbService, AuthService authService) =>
             (_dbService, _authService) = (dbService, authService);
 
-        public List<Customer> GetCustomerBy(string field, object value)
+        public List<Customer> GetCustomerBy(string fieldDb, object value)
         {
 
             using var db = _dbService.Open();
-            var fieldDb = this.FieldsMeta[field];
 
+            if(!FieldDropdowns.Any(p => p.DbColumnName.EqualIgnoreCase(fieldDb)))
+                throw new System.Exception("NOT VALID FIELD");
 
             var customers = db.Query<Customer>(@$"SELECT * 
                      FROM Customers

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Facturacion.Core;
 using Facturacion.Core.Services;
 
 namespace Facturacion.Forms.Views
@@ -9,24 +10,22 @@ namespace Facturacion.Forms.Views
     public partial class ArticulosListForm : FormBase
     {
         private readonly ItemsService _itemsService;
+        
 
-        private async void UpdateAndRefreshData()
+        private  void UpdateAndRefreshData()
         {
-            ListadoGrid.DataSource = await _itemsService.GetItems(DescripcionBox.Text.Trim());
-            ListadoGrid.Update();
-            ListadoGrid.Refresh();
+            this.CargarRegistrosPorDbPropiedad(this.simpleComboBox.SelectedItem as FieldInfoCore, this.simpleInput.Text, this.ListadoGrid, _itemsService.GetItems);
         }
 
         protected override void OnActivated(EventArgs e) =>
             UpdateAndRefreshData();
 
-        private void OnTextChangedControls(object sender, EventArgs e) =>
-            UpdateAndRefreshData();
 
         public ArticulosListForm(ItemsService itemsService) : base() 
         { 
             InitializeComponent();
             _itemsService = itemsService;
+            this.InitComboBoxFieldInfoCore(this.simpleComboBox, _itemsService.FieldDropdowns);
         }
 
         public async void CrearButton_Click(object sender, EventArgs e)
@@ -98,10 +97,8 @@ namespace Facturacion.Forms.Views
 
         private void SalirButton_Click(object sender, EventArgs e) => Hide();
 
-        private void LimpiarBtn_Click(object sender, EventArgs e)
+        private void BuscarBtn_Click(object sender, EventArgs e)
         {
-            DescripcionBox.Clear();
-            DescripcionBox.Focus();
             UpdateAndRefreshData();
         }
     }
