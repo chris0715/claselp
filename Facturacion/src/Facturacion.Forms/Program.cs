@@ -35,6 +35,8 @@ namespace Facturacion.Forms
                     .AddSingleton<ClientesListForm>()
                     .AddSingleton<FacturasListForm>()
                     .AddSingleton<UsuariosListForm>()
+                    .AddSingleton<SellerService>()
+                    .AddSingleton<VendedorForm>()
                     .AddSingleton<VendedoresListForm>()
                     .AddSingleton<MainForm>();
 

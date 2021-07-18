@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Facturacion.Core
 {
-    public class FieldInfoCore
+    public class FieldDropdown
     {
 
         public string DbColumnName { get; set; }

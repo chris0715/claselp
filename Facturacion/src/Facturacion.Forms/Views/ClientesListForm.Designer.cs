@@ -33,7 +33,6 @@ namespace Facturacion.Forms.Views
             this.limiparBtn = new System.Windows.Forms.Button();
             this.simpleComboBox = new System.Windows.Forms.ComboBox();
             this.simpleInput = new System.Windows.Forms.TextBox();
-            this.simpleBtnSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.SalirButton = new System.Windows.Forms.Button();
             this.EliminarButton = new System.Windows.Forms.Button();
@@ -50,18 +49,17 @@ namespace Facturacion.Forms.Views
             this.groupBox1.Controls.Add(this.limiparBtn);
             this.groupBox1.Controls.Add(this.simpleComboBox);
             this.groupBox1.Controls.Add(this.simpleInput);
-            this.groupBox1.Controls.Add(this.simpleBtnSearch);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1138, 48);
+            this.groupBox1.Size = new System.Drawing.Size(812, 48);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
             // 
             // limiparBtn
             // 
-            this.limiparBtn.Location = new System.Drawing.Point(695, 17);
+            this.limiparBtn.Location = new System.Drawing.Point(596, 17);
             this.limiparBtn.Name = "limiparBtn";
             this.limiparBtn.Size = new System.Drawing.Size(90, 23);
             this.limiparBtn.TabIndex = 8;
@@ -87,17 +85,6 @@ namespace Facturacion.Forms.Views
             this.simpleInput.Size = new System.Drawing.Size(404, 23);
             this.simpleInput.TabIndex = 7;
             // 
-            // simpleBtnSearch
-            // 
-            this.simpleBtnSearch.Location = new System.Drawing.Point(596, 18);
-            this.simpleBtnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.simpleBtnSearch.Name = "simpleBtnSearch";
-            this.simpleBtnSearch.Size = new System.Drawing.Size(82, 22);
-            this.simpleBtnSearch.TabIndex = 6;
-            this.simpleBtnSearch.Text = "buscar";
-            this.simpleBtnSearch.UseVisualStyleBackColor = true;
-            this.simpleBtnSearch.Click += new System.EventHandler(this.buscarBtn_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.SalirButton);
@@ -105,9 +92,9 @@ namespace Facturacion.Forms.Views
             this.panel1.Controls.Add(this.ModificarButton);
             this.panel1.Controls.Add(this.AgregarButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 411);
+            this.panel1.Location = new System.Drawing.Point(0, 431);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1138, 50);
+            this.panel1.Size = new System.Drawing.Size(812, 50);
             this.panel1.TabIndex = 1;
             // 
             // SalirButton
@@ -161,14 +148,14 @@ namespace Facturacion.Forms.Views
             this.ListadoGrid.ReadOnly = true;
             this.ListadoGrid.RowHeadersWidth = 51;
             this.ListadoGrid.RowTemplate.Height = 25;
-            this.ListadoGrid.Size = new System.Drawing.Size(1138, 363);
+            this.ListadoGrid.Size = new System.Drawing.Size(812, 383);
             this.ListadoGrid.TabIndex = 2;
             // 
             // ClientesListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1138, 461);
+            this.ClientSize = new System.Drawing.Size(812, 481);
             this.Controls.Add(this.ListadoGrid);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
@@ -191,7 +178,6 @@ namespace Facturacion.Forms.Views
         private System.Windows.Forms.Button EliminarButton;
         private System.Windows.Forms.Button ModificarButton;
         private System.Windows.Forms.Button AgregarButton;
-        private System.Windows.Forms.Button simpleBtnSearch;
         private System.Windows.Forms.ComboBox simpleComboBox;
         private System.Windows.Forms.TextBox simpleInput;
         private System.Windows.Forms.Button limiparBtn;

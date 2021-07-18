@@ -85,6 +85,7 @@ namespace Facturacion.Forms.Views
             this.NuevoVendedorButton.Name = "NuevoVendedorButton";
             this.NuevoVendedorButton.Size = new System.Drawing.Size(211, 22);
             this.NuevoVendedorButton.Text = "Nuevo Vendedor";
+            this.NuevoVendedorButton.Click += new System.EventHandler(this.NuevoVendedorButton_Click);
             // 
             // VendedorListButton
             // 

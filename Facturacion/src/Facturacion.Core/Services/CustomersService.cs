@@ -12,12 +12,7 @@ namespace Facturacion.Core.Services
         private readonly AuthService _authService;
         private readonly DbService _dbService;
 
-        public List<FieldInfoCore> FieldDropdowns = new List<FieldInfoCore>() {
-
-            new FieldInfoCore { Label= "Razon Social", DbColumnName = "FullName" },
-            new FieldInfoCore { Label= "Cedula", DbColumnName = "GvmtId" },
-            new FieldInfoCore { Label= "Cuenta Contable", DbColumnName = "Cuenta" },
-        };
+       
 
         public async Task<bool> CreateCustomer(Customer customer)
         {
@@ -33,19 +28,36 @@ namespace Facturacion.Core.Services
             try { return (await db.ExecuteAsync(sql, customer)) == 1; } catch { return false; }
         }
 
-        public async Task<IEnumerable<Customer>> GetCustomers(string fullName = null, string gvmtId = null)
+        //public async Task<IEnumerable<Customer>> GetCustomers(string fullName = null, string gvmtId = null)
+        //{
+        //    var sql = "SELECT * FROM Customers";
+        //    if (!string.IsNullOrEmpty(fullName) || !string.IsNullOrEmpty(gvmtId))
+        //        sql += " WHERE ";
+        //    if (!string.IsNullOrEmpty(fullName))
+        //        sql += "FullName LIKE '%' || @fullName || '%'";
+        //    if (!string.IsNullOrEmpty(gvmtId))
+        //        sql += $"{(!string.IsNullOrEmpty(fullName)? " AND " : string.Empty)} GvmtId = @gvmtId";
+
+        //    using var db = _dbService.Open();
+        //    return await db.QueryAsync<Customer>(sql, new { fullName, gvmtId });
+        //}
+
+        public IEnumerable<Customer> GetCustomers(string fieldDb = null, string value = null)
         {
             var sql = "SELECT * FROM Customers";
-            if (!string.IsNullOrEmpty(fullName) || !string.IsNullOrEmpty(gvmtId))
-                sql += " WHERE ";
-            if (!string.IsNullOrEmpty(fullName))
-                sql += "FullName LIKE '%' || @fullName || '%'";
-            if (!string.IsNullOrEmpty(gvmtId))
-                sql += $"{(!string.IsNullOrEmpty(fullName)? " AND " : string.Empty)} GvmtId = @gvmtId";
-
             using var db = _dbService.Open();
-            return await db.QueryAsync<Customer>(sql, new { fullName, gvmtId });
+            if (!string.IsNullOrEmpty(fieldDb) && !value.IsBlank())
+            {
+                sql += $" WHERE {fieldDb} LIKE  @param1";
+                return db.Query<Customer>(sql, new { param1 = $"%{value.Trim()}%" }).ToList();
+            }
+            else if (!value.IsBlank())
+            {
+                sql += $" WHERE FullName LIKE  @param1";
+            }
+            return db.Query<Customer>(sql).ToList();
         }
+
 
         public async Task<Customer> GetCustomer(int id)
         {
@@ -77,20 +89,37 @@ namespace Facturacion.Core.Services
         public CustomersService(DbService dbService, AuthService authService) =>
             (_dbService, _authService) = (dbService, authService);
 
-        public List<Customer> GetCustomerBy(string fieldDb, object value)
+
+
+        public static bool ValidarCedula(string cedula)
         {
+            int digito = 0;
+            int digitoVerificador = 0;
+            bool resultado = false;
+            int[] multiplicadores = { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2 };
+            int producto = 0;
+            int suma = 0;
 
-            using var db = _dbService.Open();
+            if (cedula.Contains("-"))
+                cedula = cedula.Replace("-", "");
 
-            if(!FieldDropdowns.Any(p => p.DbColumnName.EqualIgnoreCase(fieldDb)))
-                throw new System.Exception("NOT VALID FIELD");
+            _ = int.TryParse(cedula.Substring(cedula.Length - 1), out digitoVerificador);
 
-            var customers = db.Query<Customer>(@$"SELECT * 
-                     FROM Customers
-                     WHERE {fieldDb} LIKE @n", new { n =  $@"%{value.ToString()}%" })
-                    .ToList();
-            return customers;
-           
+            for (int i = 0; i < (cedula.Length - 1); i++)
+            {
+                _ = int.TryParse(cedula[i].ToString(), out digito);
+                producto = digito * multiplicadores[i];
+
+                if (producto >= 10)
+                    producto = (producto / 10) + (producto % 10);
+
+                suma += producto;
+            }
+
+            if ((suma + digitoVerificador) % 10 == 0)
+                resultado = true;
+
+            return resultado;
         }
     }
 }

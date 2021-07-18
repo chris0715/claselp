@@ -12,15 +12,7 @@ namespace Facturacion.Core.Services
         private readonly DbService _dbService;
         private readonly AuthService _authService;
 
-        public List<FieldInfoCore> FieldDropdowns = new List<FieldInfoCore>() {
-
-            new FieldInfoCore { Label= "Descripcion", DbColumnName = "Description" },
-            new FieldInfoCore { Label= "Costo", DbColumnName = "Cost" },
-            new FieldInfoCore { Label= "Precio", DbColumnName = "Price" },
-            new FieldInfoCore { Label= "Cantidad en Stock", DbColumnName = "Stock" },
-            new FieldInfoCore { Label= "Creado por", DbColumnName = "CreatedBy" },
-            new FieldInfoCore { Label= "Modificado por", DbColumnName = "ModifiedBy" },
-        };
+      
 
         public async Task<bool> CreateItem(Item item)
         {
@@ -36,23 +28,23 @@ namespace Facturacion.Core.Services
             try { return (await db.ExecuteAsync(sql, item)) == 1; } catch { return false; }
         }
 
-       
+
 
         public IEnumerable<Item> GetItems(string fieldDb = null, string value = null)
         {
             var sql = "SELECT * FROM Items";
             using var db = _dbService.Open();
-            var records = new List<Item>();
             if (!string.IsNullOrEmpty(fieldDb) && !value.IsBlank())
             {
                 sql += $" WHERE {fieldDb} LIKE  @param1";
-                records = db.Query<Item>(sql, new { param1 = $"%{value.Trim()}%" }).ToList();
-
-            } else
-            {
-                records = db.Query<Item>(sql).ToList();
+                return db.Query<Item>(sql, new { param1 = $"%{value.Trim()}%" }).ToList();
             }
-            return records;
+            else if (!value.IsBlank())
+            {
+                sql += $" WHERE Description LIKE  @param1";
+            }
+            return db.Query<Item>(sql).ToList();
+            
         }
 
         public async Task<Item> GetItem(int id)

@@ -82,6 +82,9 @@ namespace Facturacion.Forms.Views
             form.Show();
         }
 
+        private void NuevoVendedorButton_Click(object sender, EventArgs e) =>
+          _serviceProvider.GetService<VendedoresListForm>().AgregarButton_Click(this, new EventArgs());
+
         private void VendedoresListButton_Click(object sender, EventArgs e) =>
             ShowForm(_serviceProvider.GetService<VendedoresListForm>());
         

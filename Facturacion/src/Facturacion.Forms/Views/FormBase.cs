@@ -25,17 +25,19 @@ namespace Facturacion.Forms.Views
 
         public FormBase() => InitializeComponent();
 
-        public void InitComboBoxFieldInfoCore(ComboBox comboBox, List<FieldInfoCore> rows)
+        public void InitComboBoxFieldInfoCore(ComboBox comboBox, List<FieldDropdown> rows)
         {
             if(rows != null)
             {
                 comboBox.Items.AddRange(rows.ToArray());
+                comboBox.SelectedIndex = 0;
+
             }
-            comboBox.DisplayMember = nameof(FieldInfoCore.Label);
-            comboBox.ValueMember = nameof(FieldInfoCore.DbColumnName);
+            comboBox.DisplayMember = nameof(FieldDropdown.Label);
+            comboBox.ValueMember = nameof(FieldDropdown.DbColumnName);
         }
 
-        public void CargarRegistrosPorDbPropiedad(FieldInfoCore prop, string propertyVal, DataGridView gridView, Func<string,string, object> searchMethod)
+        public void CargarRegistrosPorDbPropiedad(FieldDropdown prop, string propertyVal, DataGridView gridView, Func<string,string, object> searchMethod)
         {
 
             if (prop == null)

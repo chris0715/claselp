@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Facturacion.Core.Entities;
+using Facturacion.Core.Services;
 
 namespace Facturacion.Forms.Views
 {
@@ -31,6 +32,9 @@ namespace Facturacion.Forms.Views
         {
             var result = DialogResult.OK;
 
+            if (Result.GvmtId?.Contains("-") ?? false)
+                Result.GvmtId = Result.GvmtId.Replace("-", "");
+
             if (NombreBox.Text.Trim().Length == 0)
             {
                 NombreBox.Focus();
@@ -40,6 +44,9 @@ namespace Facturacion.Forms.Views
             {
                 CedulaBox.Focus();
                 result = DialogResult.None;
+            } else if (!CustomersService.ValidarCedula(Result.GvmtId.Trim()))
+            {
+                MessageBox.Show("Cedula Invalida");
             }
 
             DialogResult = result;

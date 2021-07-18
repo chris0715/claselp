@@ -30,9 +30,9 @@ namespace Facturacion.Forms.Views
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.limpiarFiltroBtn = new System.Windows.Forms.Button();
             this.simpleInput = new System.Windows.Forms.TextBox();
             this.simpleComboBox = new System.Windows.Forms.ComboBox();
-            this.simpleSearch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.SalirButton = new System.Windows.Forms.Button();
             this.EliminarButton = new System.Windows.Forms.Button();
@@ -46,16 +46,26 @@ namespace Facturacion.Forms.Views
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.limpiarFiltroBtn);
             this.groupBox1.Controls.Add(this.simpleInput);
             this.groupBox1.Controls.Add(this.simpleComboBox);
-            this.groupBox1.Controls.Add(this.simpleSearch);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(800, 56);
+            this.groupBox1.Size = new System.Drawing.Size(908, 56);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
+            // 
+            // limpiarFiltroBtn
+            // 
+            this.limpiarFiltroBtn.Location = new System.Drawing.Point(679, 21);
+            this.limpiarFiltroBtn.Name = "limpiarFiltroBtn";
+            this.limpiarFiltroBtn.Size = new System.Drawing.Size(107, 23);
+            this.limpiarFiltroBtn.TabIndex = 9;
+            this.limpiarFiltroBtn.Text = "Limpiar Filtro";
+            this.limpiarFiltroBtn.UseVisualStyleBackColor = true;
+            this.limpiarFiltroBtn.Click += new System.EventHandler(this.limpiarFiltroBtn_Click);
             // 
             // simpleInput
             // 
@@ -74,16 +84,6 @@ namespace Facturacion.Forms.Views
             this.simpleComboBox.Size = new System.Drawing.Size(133, 23);
             this.simpleComboBox.TabIndex = 6;
             // 
-            // simpleSearch
-            // 
-            this.simpleSearch.Location = new System.Drawing.Point(681, 22);
-            this.simpleSearch.Name = "simpleSearch";
-            this.simpleSearch.Size = new System.Drawing.Size(107, 23);
-            this.simpleSearch.TabIndex = 2;
-            this.simpleSearch.Text = "Buscar";
-            this.simpleSearch.UseVisualStyleBackColor = true;
-            this.simpleSearch.Click += new System.EventHandler(this.BuscarBtn_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.SalirButton);
@@ -93,7 +93,7 @@ namespace Facturacion.Forms.Views
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 413);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 37);
+            this.panel1.Size = new System.Drawing.Size(908, 37);
             this.panel1.TabIndex = 1;
             // 
             // SalirButton
@@ -146,14 +146,14 @@ namespace Facturacion.Forms.Views
             this.ListadoGrid.Name = "ListadoGrid";
             this.ListadoGrid.ReadOnly = true;
             this.ListadoGrid.RowTemplate.Height = 25;
-            this.ListadoGrid.Size = new System.Drawing.Size(800, 357);
+            this.ListadoGrid.Size = new System.Drawing.Size(908, 357);
             this.ListadoGrid.TabIndex = 2;
             // 
             // ArticulosListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(908, 450);
             this.Controls.Add(this.ListadoGrid);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
@@ -171,7 +171,6 @@ namespace Facturacion.Forms.Views
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button simpleSearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button CrearButton;
         private System.Windows.Forms.DataGridView ListadoGrid;
@@ -180,5 +179,6 @@ namespace Facturacion.Forms.Views
         private System.Windows.Forms.Button SalirButton;
         private System.Windows.Forms.ComboBox simpleComboBox;
         private System.Windows.Forms.TextBox simpleInput;
+        private System.Windows.Forms.Button limpiarFiltroBtn;
     }
 }

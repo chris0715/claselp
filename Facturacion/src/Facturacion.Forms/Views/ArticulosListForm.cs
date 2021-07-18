@@ -10,11 +10,22 @@ namespace Facturacion.Forms.Views
     public partial class ArticulosListForm : FormBase
     {
         private readonly ItemsService _itemsService;
-        
+
+
+        public List<FieldDropdown> FieldDropdowns = new List<FieldDropdown>() {
+
+            new FieldDropdown { Label= "Descripcion", DbColumnName = "Description" },
+            new FieldDropdown { Label= "Costo", DbColumnName = "Cost" },
+            new FieldDropdown { Label= "Precio", DbColumnName = "Price" },
+            new FieldDropdown { Label= "Cantidad en Stock", DbColumnName = "Stock" },
+            new FieldDropdown { Label= "Creado por", DbColumnName = "CreatedBy" },
+            new FieldDropdown { Label= "Modificado por", DbColumnName = "ModifiedBy" },
+        };
 
         private  void UpdateAndRefreshData()
         {
-            this.CargarRegistrosPorDbPropiedad(this.simpleComboBox.SelectedItem as FieldInfoCore, this.simpleInput.Text, this.ListadoGrid, _itemsService.GetItems);
+            this.CargarRegistrosPorDbPropiedad(this.simpleComboBox.SelectedItem as FieldDropdown, this.simpleInput.Text, this.ListadoGrid, _itemsService.GetItems);
+        
         }
 
         protected override void OnActivated(EventArgs e) =>
@@ -25,7 +36,7 @@ namespace Facturacion.Forms.Views
         { 
             InitializeComponent();
             _itemsService = itemsService;
-            this.InitComboBoxFieldInfoCore(this.simpleComboBox, _itemsService.FieldDropdowns);
+            this.InitComboBoxFieldInfoCore(this.simpleComboBox, FieldDropdowns);
         }
 
         public async void CrearButton_Click(object sender, EventArgs e)
@@ -97,8 +108,12 @@ namespace Facturacion.Forms.Views
 
         private void SalirButton_Click(object sender, EventArgs e) => Hide();
 
-        private void BuscarBtn_Click(object sender, EventArgs e)
+       
+
+        private void limpiarFiltroBtn_Click(object sender, EventArgs e)
         {
+            this.simpleComboBox.SelectedIndex = 0;
+            this.simpleInput.Text = "";
             UpdateAndRefreshData();
         }
     }

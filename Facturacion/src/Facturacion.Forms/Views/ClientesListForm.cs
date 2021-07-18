@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Facturacion.Core;
@@ -12,15 +13,23 @@ namespace Facturacion.Forms.Views
 
         private async void UpdateAndRefreshData()
         {
-            this.CargarRegistrosPorDbPropiedad(this.simpleComboBox.SelectedItem as FieldInfoCore, this.simpleInput.Text, this.ListadoGrid, _customerService.GetCustomerBy);
+            this.CargarRegistrosPorDbPropiedad(this.simpleComboBox.SelectedItem as FieldDropdown, this.simpleInput.Text, 
+                this.ListadoGrid, _customerService.GetCustomers);
 
         }
+
+        public List<FieldDropdown> FieldDropdowns = new List<FieldDropdown>() {
+
+            new FieldDropdown { Label= "Razon Social", DbColumnName = "FullName" },
+            new FieldDropdown { Label= "Cedula", DbColumnName = "GvmtId" },
+            new FieldDropdown { Label= "Cuenta Contable", DbColumnName = "Cuenta" },
+        };
 
         public ClientesListForm(CustomersService customerService) : base()
         {
             InitializeComponent();
             _customerService = customerService;
-            this.InitComboBoxFieldInfoCore(this.simpleComboBox, _customerService.FieldDropdowns);
+            this.InitComboBoxFieldInfoCore(this.simpleComboBox, FieldDropdowns);
         }
 
         private void SalirButton_Click(object sender, EventArgs e) => Hide();
@@ -100,15 +109,13 @@ namespace Facturacion.Forms.Views
 
         private void LimpiarFiltroButton_Click(object sender, EventArgs e)
         {
-            
+            this.simpleComboBox.SelectedIndex = 0;
+            this.simpleInput.Text = "";
             UpdateAndRefreshData();
         }
 
        
-        private void buscarBtn_Click(object sender, EventArgs e)
-        {
-            UpdateAndRefreshData();
-        }
+      
 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
